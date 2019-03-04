@@ -1,0 +1,435 @@
+<!--
+=======================================================
+Student Name: Siyi Lin
+Solution for Assignment 8
+=======================================================
+-->
+
+<html>
+	<head>
+		<title>The JavaScript Pizza Parlor</title>
+			<script>
+				function doClear()
+				{			
+					document.PizzaForm.customer.value = "";
+					document.PizzaForm.address.value = "";					
+					document.PizzaForm.city.value = "";
+<!--Reset the State to default -->
+					document.PizzaForm.selectionState.selectedIndex = "0";		
+					document.PizzaForm.zip.value = "";
+					document.PizzaForm.phone.value = "";
+					document.PizzaForm.email.value = "";
+					
+					document.PizzaForm.sizes[0].checked = false;
+					document.PizzaForm.sizes[1].checked = false;
+					document.PizzaForm.sizes[2].checked = false;
+					document.PizzaForm.sizes[3].checked = false;
+
+					document.PizzaForm.toppings[0].checked = false;					
+					document.PizzaForm.toppings[1].checked = false;
+					document.PizzaForm.toppings[2].checked = false;
+					document.PizzaForm.toppings[3].checked = false;
+					document.PizzaForm.toppings[4].checked = false;
+					document.PizzaForm.toppings[5].checked = false;
+					document.PizzaForm.toppings[6].checked = false;
+					document.PizzaForm.toppings[7].checked = false;
+		
+					return;
+				}	
+				
+				function doSubmit()
+				{
+//Capitalize the first letter of name			
+					var customer = document.PizzaForm.customer.value;
+					var name = customer.toLowerCase();
+					var splitName = name.split(" ");
+					var customerName = "";
+					for (var i = 0; i < splitName.length; i++) {
+							customerName += splitName[i].charAt(0).toUpperCase() + splitName[i].slice(1);
+						if (i < splitName.length - 1) {
+							customerName += " "
+						}
+					}
+
+//Capitalize the first letter of the name of the city				
+					var city = document.PizzaForm.city.value;
+					var cityName = city.toLowerCase();
+					var splitCity = cityName.split(" ");
+					var customerCity = "";
+					for (var i = 0; i < splitCity.length; i++) {
+							customerCity += splitCity[i].charAt(0).toUpperCase() + splitCity[i].slice(1);
+						if (i < splitCity.length - 1) {
+							customerCity += " "
+						}
+					}				
+							
+					if (validateText() && validateRadio() && validateCheck())
+					{
+						var confirmation = "";
+						var ind = document.PizzaForm.selectionState.options.selectedIndex;
+						var value = document.PizzaForm.selectionState.options[ind].value;
+						
+						confirmation += "Your order has been submitted.<br /><br />";
+						confirmation += "Name: " + customerName + "<br />";						
+						confirmation += "Address:" + document.PizzaForm.address.value + "<br />";
+						confirmation += "City: " + customerCity + "<br />";
+						confirmation += "State: " + document.PizzaForm.selectionState.value + "<br />";
+						confirmation += "Zip: " + document.PizzaForm.zip.value + "<br />";		
+						confirmation += "Phone: " + document.PizzaForm.phone.value + "<br />";		
+						confirmation += "Email: " + document.PizzaForm.email.value + "<br />";									
+						
+						
+						var size = printRadio();
+						
+						confirmation += size;
+						
+						var toppings = printCheck();
+						
+						confirmation += toppings;
+						
+						document.write(confirmation);
+					}
+					return;
+				}
+								
+				function validateText()
+				{
+					var transcribed = true;
+					
+					var notification = "";
+					
+					var customer = document.PizzaForm.customer.value;
+					if (customer.length == 0) 
+					{
+						transcribed = false;
+						notification += "Please enter your name.\n";
+					}
+					
+
+					var address = document.PizzaForm.address.value;
+					if (address.length == 0) 
+					{
+						transcribed = false;
+						notification += "Please enter your address.\n";
+					}
+
+					var city = document.PizzaForm.city.value;
+					if (city.length == 0) 
+					{
+						transcribed = false;
+						notification += "Please enter your city.\n";
+					}
+
+					var state = document.PizzaForm.selectionState.value;
+					if (state.length == 0) 
+					{
+						transcribed = false;
+						notification += "Please enter your state.\n";
+					}
+//zip code validation
+					var zip = document.PizzaForm.zip.value;
+					if( (isNaN(zip)) || (zip.length !== 5) )
+					{
+						transcribed = false;
+						notification += "Please enter number for your zip, 5 digits please.\n";
+					}
+
+			//phone number validation					
+				var phone = document.PizzaForm.phone.value;
+				var phonePatPar = /^(\(\d{3}\))\d{3}-?\d{4}$/;
+				var phonePatDash = /^\d{3}-\d{3}-\d{4}$/;
+				var phonePat10 = /^\d{10}$/; 
+				if ((phonePatPar.test(phone)== false)&& (phonePatDash.test(phone) == false)&& (phonePat10.test(phone) == false))
+				{
+				transcribed = false;
+				notification += "Please enter your phone as the follwoing format, 'ddd-ddd-dddd', 'dddddddddd', '(ddd)ddd-dddd', or '(ddd)ddd-dddd' \n";
+				}				
+				
+
+			//Email validation				
+				var email = document.PizzaForm.email.value;					
+				var emailPattern = /^[_a-z0-9\\-]+(\.[_a-z0-9\\-]+)*@[a-z0-9\\-]+(\.[a-z0-9\\-]+)*(\.[a-z]{2,3})$/;
+				if (emailPattern.test(email) == false)
+				{
+				transcribed = false;
+				notification += "Please enter your email as the follwoing format, abc@xxx.com. \n" ;
+				}
+	
+					
+					if (!transcribed)
+					{
+						alert(notification);
+					}
+					
+					return transcribed;
+				}
+				
+				function validateRadio()
+				{
+					var highlighted = false; 
+					
+					if (document.PizzaForm.sizes[0].checked)
+					{
+						highlighted = true;
+					}
+					
+					if (document.PizzaForm.sizes[1].checked)
+					{
+						highlighted = true;
+					}
+
+					if (document.PizzaForm.sizes[2].checked)
+					{
+						highlighted = true;
+					}					
+					
+					if (document.PizzaForm.sizes[3].checked)
+					{
+						highlighted = true;
+					}
+					
+					if (!highlighted)
+					{
+						alert("Please select a size.");
+					}
+					
+					return highlighted;
+				}
+				
+				function validateCheck()
+				{
+					var selected = false;	
+					
+					if (document.PizzaForm.toppings[0].checked) 
+					{
+						selected = true;
+					}
+										
+					if (document.PizzaForm.toppings[1].checked) 
+					{
+						selected = true;
+					}
+
+					if (document.PizzaForm.toppings[2].checked) 
+					{
+						selected = true;
+					}
+
+					if (document.PizzaForm.toppings[3].checked) 
+					{
+						selected = true;
+					}
+
+					if (document.PizzaForm.toppings[4].checked) 
+					{
+						selected = true;
+					}
+
+					if (document.PizzaForm.toppings[5].checked) 
+					{
+						selected = true;
+					}
+
+					if (document.PizzaForm.toppings[6].checked) 
+					{
+						selected = true;
+					}
+
+					if (document.PizzaForm.toppings[7].checked) 
+					{
+						selected = true;
+					}
+				
+					
+					if (!selected)
+					{
+						alert("Please choose at least one topping.");		
+					}
+					
+					return selected;
+				}
+				
+				function printRadio()
+				{
+					var size;
+					
+					if (document.PizzaForm.sizes[0].checked)
+					{
+						size = "Size: Small <br />";
+					}
+
+					if (document.PizzaForm.sizes[1].checked)
+					{
+						size = "Size: Medium <br />";
+					}
+
+					if (document.PizzaForm.sizes[2].checked)
+					{
+						size = "Size: Large <br />";
+					}
+
+					if (document.PizzaForm.sizes[3].checked)
+					{
+						size = "Size: Jumbo <br />";
+					}
+				
+					
+					return size;
+				}
+				
+				function printCheck()
+				{
+					var toppings = "Toppings: ";
+					
+					var choice1 = true;
+					
+					if (document.PizzaForm.toppings[0].checked)
+					{
+						toppings += "Pepperoni";
+						choice1 = false;
+					}
+					if (document.PizzaForm.toppings[1].checked) 
+					{
+						if(choice1)
+						{
+							toppings += "Canadian Bacon";
+							choice1 = false;
+						}
+						else
+						{
+							toppings += ", Canadian Bacon";
+						}
+					}			
+
+					if (document.PizzaForm.toppings[2].checked) 
+					{
+						if(choice1)
+						{
+							toppings += "Sausage";
+							choice1 = false;
+						}
+						else
+						{
+							toppings += ", Sausage";
+						}
+					}
+
+					if (document.PizzaForm.toppings[3].checked) 
+					{
+						if(choice1)
+						{
+							toppings += "Mushrooms";
+							choice1 = false;
+						}
+						else
+						{
+							toppings += ", Mushrooms";
+						}
+					}
+
+					if (document.PizzaForm.toppings[4].checked) 
+					{
+						if(choice1)
+						{
+							toppings += "Pineapple";
+							choice1 = false;
+						}
+						else
+						{
+							toppings += ", Pineapple";
+						}
+					}
+					
+					if (document.PizzaForm.toppings[5].checked) 
+					{
+						if(choice1)
+						{
+							toppings += "Black Olives";
+							choice1 = false;
+						}
+						else
+						{
+							toppings += ", Black Olives";
+						}
+					}					
+					
+					if (document.PizzaForm.toppings[6].checked) 
+					{
+						if(choice1)
+						{
+							toppings += "Green Peppers";
+							choice1 = false;
+						}
+						else
+						{
+							toppings += ", Green Peppers";
+						}
+					}					
+					
+					if (document.PizzaForm.toppings[7].checked) 
+					{
+						if(choice1)
+						{
+							toppings += "Extra Cheese";
+							choice1 = false;
+						}
+						else
+						{
+							toppings += ", Extra Cheese";
+						}
+					}					
+								
+					return toppings;
+				}
+
+	
+			</script>
+	</head>
+	<body>
+		<form name="PizzaForm">
+			<h1>The JavaScript Pizza Parlor</h1>
+			<p>
+				<h4>Step 1: Enter your name, address, phone number, and email:</h4>
+				<font face="Courier New">
+					Name: &nbsp;&nbsp;&nbsp;<input name="customer" size="50" type="text" /><br />
+					Address: <input name="address" size="50" type="text" /><br />
+					City: &nbsp;&nbsp;&nbsp;<input name="city" size="15" type="text" />
+					State:
+							<select name="selectionState"> 
+								<option value="PA" selected>PA</option> 
+								<option value="NJ" >NJ</option> 
+								<option value="NY" >NY</option>
+								<option value="DE" >DE</option>
+							</select> 
+					Zip: <input name="zip" size="5" type="text" /><br />
+					Phone: &nbsp;&nbsp;<input name="phone" size="50" type="text" /><br />
+					Email: &nbsp;&nbsp;<input name="email" size="50" type="text" /><br />
+				</font>
+			</p>
+			<p>
+				<h4>Step 2: Select the size of the pizza you want:</h4>
+				<font face="Courier New">
+					<input name="sizes" type="radio" />Small
+					<input name="sizes" type="radio" />Medium
+					<input name="sizes" type="radio" />Large
+					<input name="sizes" type="radio" />Jumbo					
+				</font>
+			</p>
+			<p>
+				<h4>Step 3: Select the pizza toppings you want:</h4>
+				<font face="Courier New">
+					<input name="toppings" type="checkbox" />Pepperoni
+					<input name="toppings" type="checkbox" />Canadian Bacon
+					<input name="toppings" type="checkbox" />Sausage<br />
+					<input name="toppings" type="checkbox" />Mushrooms
+					<input name="toppings" type="checkbox" />Pineapple
+					<input name="toppings" type="checkbox" />Black Olives<br />
+					<input name="toppings" type="checkbox" />Green Peppers
+					<input name="toppings" type="checkbox" />Extra Cheese<br />					
+				</font>
+			</p>
+			<input type="button" value="Submit Order" onClick="doSubmit()" />
+			<input type="button" value="Clear Entries" onClick="doClear()" />
+		</form>
+	</body>
+</html>

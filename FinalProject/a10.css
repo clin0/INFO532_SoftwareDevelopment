@@ -1,0 +1,31 @@
+h1 {
+	text-align: center;
+}
+
+table {
+	margin-left:auto; 
+	margin-right:auto;
+}
+
+table {
+	border: 1px solid black;
+	border-collapse: collapse;    
+}
+
+input[type=radio]:checked + label {
+	font-weight: bold;
+	color: red;
+}
+
+.inputData{
+	line-height:2;
+}
+	
+.inputData label {
+	float: left;
+	width: 130px;
+}
+
+.button {
+	text-align: center;
+}

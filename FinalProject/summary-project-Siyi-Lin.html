@@ -1,0 +1,458 @@
+<!--
+===============================================
+Student Name: Siyi Lin
+Solution for Summary Project
+===============================================
+-->
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Computer System Order Form</title>
+	<link href="a10.css" rel="stylesheet" type="text/css">
+	
+	<script>
+	function updateTotal() {
+	
+	var totalPrice = 0
+	
+		function checkCase() {
+			if (document.getElementById('desktop').checked) {
+				document.getElementById('imageCase').src = 'caseDesk.jpg';
+				totalPrice += 500;
+				}
+
+			if (document.getElementById('mini').checked) {
+				document.getElementById('imageCase').src = 'caseMini.jpg';
+				totalPrice += 600;
+				}
+				
+			if (document.getElementById('full').checked) {
+				document.getElementById('imageCase').src = 'caseFull.jpg';
+				totalPrice += 700;
+				}		
+		} // end of checking for case style
+			
+		function checkMonitor() {
+			if (document.getElementById('17').checked) {
+				document.getElementById('imageMonitor').src = 'monitor17.jpg';
+				totalPrice += 250;
+				}
+
+			if (document.getElementById('19').checked) {
+				document.getElementById('imageMonitor').src = 'monitor19.jpg';
+				totalPrice += 300;
+				}
+				
+			if (document.getElementById('21').checked) {
+				document.getElementById('imageMonitor').src = 'monitor21.jpg';
+				totalPrice += 350;
+				}		
+		} // end of checking for monitor	
+			
+		function checkPrinter() {
+			if (document.getElementById('inkjet').checked) {
+				document.getElementById('imagePrinter').src = 'printerInk.jpg';
+				totalPrice += 100;
+				}
+
+			if (document.getElementById('laser').checked) {
+				document.getElementById('imagePrinter').src = 'printerLaser.jpg';
+				totalPrice += 250;
+				}
+				
+			if (document.getElementById('color').checked) {
+				document.getElementById('imagePrinter').src = 'printerColor.jpg';
+				totalPrice += 350;
+				}		
+		} // end of checking for monitor	
+
+		checkCase();
+		checkMonitor();
+		checkPrinter();
+		
+	var totalPayment = 	totalPrice
+	document.getElementById('totalPrice').innerHTML = "$ " + totalPrice;
+	
+	}
+	// end of updating total payment amount	
+
+
+	
+	function doClear(){
+		document.OrderForm.customer.value = "";
+		document.OrderForm.address.value = "";					
+		document.OrderForm.city.value = "";
+		document.OrderForm.selectionState.selectedIndex = "0";	
+		document.OrderForm.zip.value = "";
+		document.OrderForm.phone.value = "";
+		document.OrderForm.email.value = "";
+
+		document.getElementById('desktop').checked = false;
+		document.getElementById('mini').checked = false;
+		document.getElementById('full').checked = false;		
+		
+		document.getElementById('17').checked = false;		
+		document.getElementById('19').checked = false;		
+		document.getElementById('21').checked = false;		
+
+		document.getElementById('inkjet').checked = false;		
+		document.getElementById('laser').checked = false;		
+		document.getElementById('color').checked = false;
+
+		document.getElementById('totalPrice').value = "";		
+						
+		return;
+	}
+	//end of form cleaning	
+	
+	
+	
+	function doSubmit(){
+		if (validateText() && validateCaseStyle() && validateMonitor() && validatePrinter() ){
+			var confirmation = "";
+			
+			confirmation += "Your order has been submitted.<br /><br />";
+			confirmation += "Name: " + document.OrderForm.customer.value + "<br />";
+			confirmation += "Address:" + document.OrderForm.address.value + "<br />";
+			confirmation += "City: " + document.OrderForm.city.value + "<br />";
+			confirmation += "State: " + document.OrderForm.selectionState.value + "<br />";
+			confirmation += "Zip: " + document.OrderForm.zip.value + "<br />";	
+			confirmation += "Phone: " + document.OrderForm.phone.value + "<br />";		
+			confirmation += "Email: " + document.OrderForm.email.value + "<br />";											
+		
+			var caseStyle = printCaseStyle();
+			confirmation += caseStyle;
+
+			var monitor = printMonitor();
+			confirmation += monitor;
+			
+			var printer = printPrinter();
+			confirmation += printer;
+			
+			document.write(confirmation);
+		}
+		return;		
+	}//end of form submition after validate personal info, case, monitor, and printer options	
+	
+
+		function validateText(){
+			var transcribed = true;	
+			var notification = "";
+			
+			var customer = document.OrderForm.customer.value;
+			if (customer.length == 0) 
+			{
+				transcribed = false;
+				notification += "Please enter your name.\n";
+			}
+
+			var address = document.OrderForm.address.value;
+			if (address.length == 0) 
+			{
+				transcribed = false;
+				notification += "Please enter your address.\n";
+			}
+
+			var city = document.OrderForm.city.value;
+			if (city.length == 0) 
+			{
+				transcribed = false;
+				notification += "Please enter your city.\n";
+			}
+
+			var state = document.OrderForm.selectionState.value;
+			if (state.length == 0) 
+			{
+				transcribed = false;
+				notification += "Please enter your state.\n";
+			}
+
+			var zip = document.OrderForm.zip.value;
+			if ((isNaN(zip)) || (zip.length !== 5)) 
+			{
+				transcribed = false;
+				notification += "Please enter your zip with 5 digits please.\n";
+			}
+
+			var phone = document.OrderForm.phone.value;
+				var phonePatPar = /^(\(\d{3}\))\d{3}-?\d{4}$/;
+				var phonePatDash = /^\d{3}-\d{3}-\d{4}$/;
+				var phonePat10 = /^\d{10}$/; 
+			if ((phonePatPar.test(phone)== false)&& (phonePatDash.test(phone) == false)&& (phonePat10.test(phone) == false))
+			{
+				transcribed = false;
+				notification += "Please enter your phone as the follwoing format, 'ddd-ddd-dddd', 'dddddddddd', '(ddd)ddd-dddd', or '(ddd)ddd-dddd' \n";
+			}				
+			
+			var email = document.OrderForm.email.value;
+				var emailPattern = /^[_a-z0-9\\-]+(\.[_a-z0-9\\-]+)*@[a-z0-9\\-]+(\.[a-z0-9\\-]+)*(\.[a-z]{2,3})$/;
+			if (emailPattern.test(email) == false)
+			{
+				transcribed = false;
+				notification += "Please enter your email as the follwoing format, abc@xxx.com. \n" ;
+			}					
+
+			if (!transcribed)
+			{
+				alert(notification);
+			}
+			
+			return transcribed;
+		}//end of personal info validation
+
+
+
+		function validateCaseStyle(){
+			var highlighted = false; 
+			
+			if (document.getElementById('desktop').checked) 
+			{
+				highlighted = true;
+			}
+			
+			if (document.getElementById('mini').checked)
+			{
+				highlighted = true;
+			}
+			
+			if (document.getElementById('full').checked)
+			{
+				highlighted = true;
+			}					
+			if (!highlighted)
+			{
+				alert("Please select a case.");
+			}
+			
+			return highlighted;
+		}//end case validation
+
+
+
+		function validateMonitor(){
+			var highlighted = false; 
+
+			if (document.getElementById('17').checked)
+			{
+				highlighted = true;
+			}
+
+			if (document.getElementById('19').checked)
+			{
+				highlighted = true;
+			}	
+			
+			if (document.getElementById('21').checked)
+			{
+				highlighted = true;
+			}		
+			
+			if (!highlighted)
+			{
+				alert("Please select a monitor.");
+			}
+			
+			return highlighted;
+		}//end monitor validation
+
+
+
+		function validatePrinter(){
+			var highlighted = false; 
+			
+			if (document.getElementById('inkjet').checked)
+			{
+				highlighted = true;
+			}	
+
+			if (document.getElementById('laser').checked)
+			{
+				highlighted = true;
+			}
+
+			if (document.getElementById('color').checked)
+			{
+				highlighted = true;
+			}	
+			
+			if (!highlighted)
+			{
+				alert("Please select a printer.");
+			}
+			
+			return highlighted;
+		}//end printer validation
+
+
+
+		function printCaseStyle(){
+			var caseStyle;
+			
+			if (document.getElementById('desktop').checked)
+			{
+				caseStyle = "Case style: Desktop <br />";
+			}
+
+			if (document.getElementById('mini').checked)
+			{
+				caseStyle = "Case style: Mini-Tower <br />";
+			}
+
+			if (document.getElementById('full').checked)
+			{
+				caseStyle = "Case style: Full Tower <br />";
+			}
+			return caseStyle;
+		}//End case style selection	
+
+			
+		function printMonitor(){	
+			var monitor;
+			if (document.getElementById('17').checked)
+			{
+				monitor = "Monitor size: 17 LCD Flat Screen <br />";
+			}
+
+			if (document.getElementById('19').checked)
+			{
+				monitor = "Monitor size: 19 LCD Flat Screen  <br />";
+			}	
+			
+			if (document.getElementById('21').checked)
+			{
+				monitor = "Monitor size: 21 LCD Flat Screen  <br />";
+			}	
+			
+			return monitor;
+		}//End monitors selection
+			
+			
+		function printPrinter(){	
+			var printer;
+			if (document.getElementById('inkjet').checked)
+			{
+				printer = "Printer: Inkjet printer <br />";
+			}
+
+			if (document.getElementById('laser').checked)
+			{
+				printer = "Printer: Laser printer <br />";
+			}	
+			
+			if (document.getElementById('color').checked)
+			{
+				printer = "Printer: Color Laser printer <br />";
+			}	
+			
+			return printer;
+		}//End printers selection
+
+	</script>	
+</head>
+
+<body>
+	<h1>Computer System Order Form</h1>
+	
+	<table width="80%" >
+	 <tbody>
+	  <tr>
+	   <td width="50%">
+		<table height=500 width="100%" >
+			<tbody>
+			<tr>
+				<td width="50%">
+					<p><h4>Computer Case Style:</h4>
+						<input type="radio" name="cases" id="desktop" value="desktop" onclick="updateTotal()" >
+							<label>Desktop Case ($500.00) </label></br>
+						<input type="radio" name="cases" id="mini" value="mini" onclick="updateTotal()" >
+							<label>Mini-Tower Case ($600.00) </label></br>
+						<input type="radio" name="cases" id="full" value="full" onclick="updateTotal()" >
+							<label>Full Tower Case ($700.00) </label></br>
+					</p>
+				</td>
+				<td width="50%"> 
+					<img src="caseDesk.jpg" alt="" id="imageCase"> 
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<p><h4>Computer Monitor:</h4>
+						<input type="radio" name="monitors" id="17" value="17" onclick="updateTotal()" >
+							<label>17" LCD Flat Screen ($250.00) </label></br>
+						<input type="radio" name="monitors" id="19" value="19" onclick="updateTotal()" >
+							<label>19" LCD Flat Screen ($300.00) </label></br>
+						<input type="radio" name="monitors" id="21" value="21" onclick="updateTotal()" >
+							<label>21" LCD Flat Screen ($350.00) </label></br>					
+					</p>			
+				</td>
+				<td>
+					<img src = "monitor17.jpg" alt="" id="imageMonitor" > 
+				</td>
+			</tr>		
+			
+			<tr>
+				<td>
+					<p><h4>Computer Printer:</h4>
+						<input type="radio" name="printers" id="inkjet" value="inkjet" onclick="updateTotal()" >
+							<label>Inkjet Printer ($100.00) </label></br>
+						<input type="radio" name="printers" id="laser" value="laser" onclick="updateTotal()" >
+							<label>Laser Printer ($250.00) </label></br>
+						<input type="radio" name="printers" id="color" value="color" onclick="updateTotal()" >
+							<label>Color Laser Printer ($350.00) </label></br>					
+					</p>			
+				</td>
+				<td> 
+					<img src = "printerInk.jpg" alt="" id="imagePrinter" >
+				</td>
+			</tr>		
+			</tbody>
+		</table>
+	   </td>
+
+
+	   
+	   <td width="50%">
+		<table height=500 width="100%" >
+			 <tbody>
+				<tr><td>
+					<p>Total System Price:  <output id="totalPrice"></output></p>
+					<hr color="black">
+					
+					<form name="OrderForm">
+						<div class="inputData">
+							<label>Full Name:</label>        <input name="customer" size="30" type="text" /><br />
+							<label>Street Address:</label>	 <input name="address" size="30" type="text" /><br />
+							<label>City, State, Zip:</label>    <input name="city" size="15" type="text" /> 
+																<select name="selectionState"> 
+																	<option value="PA" >PA</option> 
+																	<option value="NJ" >NJ</option> 
+																	<option value="NY" >NY</option>
+																	<option value="DE" >DE</option>
+																	<option value="MI" >MI</option>
+																</select>						
+																<input name="zip" size="5" type="text" /><br />
+							<label>Phone:</label>				<input name="phone" size="30" type="text" /><br />
+							<label>Email:</label>				<input name="email" size="30" type="text" /><br />
+						</div>
+						<hr color="black">						
+						<div class="button">
+							<input type="button" value="Submit Order" onClick="doSubmit()" />
+							<input type="button" value="Clear Values" onClick="doClear()" />
+						</div>
+					</form>				 
+					 
+				</td></tr>
+			 </tbody>
+		</table>
+	   </td>
+
+	   </tr>
+	 </tbody>
+	</table>
+
+</body>
+</html>

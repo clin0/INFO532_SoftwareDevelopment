@@ -1,0 +1,51 @@
+<!—
+===============================================
+Student Name: Siyi Lin
+Solution for Assignment 4
+===============================================
+-->
+
+
+
+
+<html>
+<head>
+	<title>Function and Conditional Statement</title>
+
+		<style>
+		h1{
+		color: white; background-color: #3f51b5;}
+	
+		.my-text {
+		color:#1a237e; font-size: 20px;} 
+		</style>	
+		
+		<script>
+			function printMessage(color){
+				document.getElementById("text").innerText = "You click " + color;
+				document.getElementById("text").style.color = color;
+			}		
+		</script>
+
+</head>
+
+
+
+<body style = "background-color: #e8eaf6">
+
+	<div id = "text">
+	<h1>Function and Conditional Statement</h1>
+
+
+	<p style=color:red; onclick="printMessage('red')">red</p></br>
+	
+
+	<p style=color:blue; onclick="printMessage('blue')">blue</p></br>
+
+	
+	<p style=color:green; onclick="printMessage('green')">green</p></br>
+	</div>
+	
+</body>
+
+</html>

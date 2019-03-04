@@ -1,0 +1,107 @@
+<!—
+===============================================
+Student Name: Siyi Lin
+Solution for Assignment 4
+===============================================
+-->
+
+
+
+
+<html>
+<head>
+	<title>Temperature Conversion</title>
+
+	<style>
+	h1{
+	color: white; background-color: #3f51b5;}
+
+	.my-text {
+	color:#1a237e; font-size: 20px;} 
+	</style>
+
+</head>
+
+
+
+<body style = "background-color: #e8eaf6">
+	<h1>Temperature Conversion</h1>
+
+	<script>
+		var tempInput = Number(prompt("Input a temperature number: "));
+		var sourceScale = prompt("Input a source scale: ");
+		var targetScale = prompt("Input a a target scale: ");	
+
+
+		
+		if (sourceScale == "C" || sourceScale == "Celsius" ) {
+			if (targetScale == "F" || targetScale == "Fahrenheit"){
+			var convertedF = cToF();				
+			} else if (targetScale == "K" || targetScale == "Kelvin"){
+			var convertedK = cToK();
+			} 
+		}
+		
+		if (sourceScale == "F" || sourceScale == "Fahrenheit" ) {
+			if (targetScale == "C" || targetScale == "Celsius"){
+			var convertedC = fToC();				
+			} else if (targetScale == "K" || targetScale == "Kelvin"){
+			var convertedK = fToK();
+			} 
+		}
+		
+		if (sourceScale == "K" || sourceScale == "Kelvin" ) {
+			if (targetScale == "C" || targetScale == "Celsius"){
+			var convertedC = kToC();				
+			} else if (targetScale == "F" || targetScale == "Fahrenheit"){
+			var convertedF= kToF()
+			} 
+		}
+		
+		if (sourceScale||targetScale !== "C" ||"Celsius"||"F"||"Fahrenheit"||"K"||"Kelvin"){
+			alert("Don’t recognize the temperature scales.");
+		}
+		
+	
+		
+			function cToF() {
+			  var cF = (tempInput * 9 / 5) + 32;
+			  alert(tempInput + "C is " +cF + " Fahrenheit in temperature conversion");  
+			}
+
+			function cToK() {
+			  var cK = tempInput + 273.15;
+			  alert(tempInput + "C is " + cK + " Kelvin in temperature conversion");
+			  }
+
+			function fToC() {
+			  var fC = (tempInput - 32) * 5 / 9;
+			  alert(tempInput + "F is " + fC + " Celsius in temperature conversion");
+			}
+
+			function fToK() {
+			  var fK = (tempInput - 32) * 5 / 9 + 273.15;
+			  alert(tempInput + "F is " + fK + " Kelvin in temperature conversion");
+			  }
+
+			function kToC() {
+			  var kC = tempInput - 273.15;
+			  alert(tempInput + "K is " + kC + " Celsius in temperature conversion" );
+			}
+
+			function kToF() {
+			  var kF = (tempInput - 273.15) * 9 / 5 + 32;
+			  alert(tempInput + "K is " + kF + " Fahrenheit in temperature conversion");
+			} 
+
+				
+	</script>		
+		
+
+
+</body>
+</html>
+
+
+
+	

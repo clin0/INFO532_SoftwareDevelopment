@@ -1,0 +1,123 @@
+<!--
+===============================================
+Student Name: Siyi Lin	
+Solution for Question 1 of Assignment 5
+===============================================
+-->
+
+<html>
+	<head>
+	
+		<title>Image Display</title>
+		
+		<script>
+			var imgArray = new Array(4);
+			var slideIndex = 0;
+			var cyclingIndex = 0;
+			var randomIndex = 0;
+			
+			function cycle(){
+				//TODO: change the src of img in cycling manner
+				
+				if (cyclingIndex > 3)
+					cyclingIndex = 0;
+
+				document.cyclingBanner.src = imgArray[cyclingIndex].src;	
+				cyclingIndex ++;
+				
+				setTimeout("cycle()", 2000);
+				return;
+			}
+			
+			
+			function random()
+			{
+				//TODO: chane the src of img in random manner
+
+				randomIndex = Math.floor(Math.random(randomIndex) * 4);
+				
+				document.randomIndex.src = imgArray[randomIndex].src;
+						
+				setTimeout("random()", 2000);
+				return;
+			}
+			
+			
+			function doBack()
+			{
+				//TODO: select the previous img in slide show
+
+				slideIndex --;	
+				if (slideIndex < 0)
+					slideIndex = 3;
+
+				document.slideShow.src = imgArray[slideIndex].src;							
+				
+				return;
+			}
+
+			function doNext()
+			{
+				//TODO: select the next img in slide show
+
+				slideIndex ++;
+				if (slideIndex > 3)
+					slideIndex = 0;				
+				
+				document.slideShow.src = imgArray[slideIndex].src;	
+							
+				return;
+			}
+
+			function startup(){
+				imgArray[0]= new Image;
+				imgArray[0].src = "lions.gif";
+				
+				//TODO: assign images to the array elements 1, 2, 3
+				imgArray[1]= new Image;
+				imgArray[1].src = "tigers.gif";
+	
+				imgArray[2]= new Image;
+				imgArray[2].src = "bears.gif";
+
+				imgArray[3]= new Image;
+				imgArray[3].src = "ohmy.gif";
+				
+				
+				cycle();
+				random();
+				return;
+			}
+		</script>
+	
+	</head>
+	
+	<body onLoad = "startup()">
+		<div style="text-align:center">
+			<h2>Cycling Banner</h2>
+			<img name = "cyclingBanner" src = "lions.gif">
+		</div>
+		
+		<hr>
+		
+		<!--TODO: create sections for random display and slide show-->
+		<div style="text-align:center">
+			<h2>Random Banner</h2>
+			<img name="randomIndex" src="lions.gif" >
+		</div>		
+
+		<hr>
+		
+		<div style="text-align:center">
+			<h2>Slide Show</h2>
+			<img name="slideShow" src="lions.gif" >
+
+			<p>	
+			<a href="javascript:doBack()">Go Back</a> 
+			<a href="javascript:doNext()">Go Next</a>
+			</p>
+			
+		</div>				
+	</body>
+
+</html>

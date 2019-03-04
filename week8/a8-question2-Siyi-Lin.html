@@ -1,0 +1,45 @@
+<!--
+===============================================
+Student Name: Siyi Lin
+Solution for Assignment 8
+===============================================
+-->
+
+
+<html>
+<head>
+	<title>Find Median</title>
+
+	<script>
+		function median(array){
+			array.sort(function(a,b){
+			return a-b;
+			});   <!-- sort as number -->
+			
+			var middleNum = Math.floor(array.length / 2);
+		  
+			if (array.length % 2)
+				return array[middleNum];
+			else
+				return (array[middleNum - 1] + array[middleNum]) / 2.0;
+		}
+
+	</script>
+</head>
+	
+<body>
+	<h1>Find Median<h1>
+	
+		<script type ="text/javascript">
+			var list_1 = [3, 8, 9, 1, 5, 7];
+			var list_2 = [10, -2, 0, 5, 3, 1, 7];
+		
+			var med = median(list_1);
+			document.write("median of [", list_1, "] is: ", med, "<br/>");
+			med = median(list_2);
+			document.write("median of [", list_2, "] is: ", med, "<br/>");			
+			
+		</script>
+	
+</body>
+</html>

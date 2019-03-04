@@ -1,0 +1,173 @@
+<!--
+===============================================
+Student Name: Siyi Lin
+Solution for Assignment 9
+===============================================
+
+-->
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+		<title>Style Viewer</title>
+		<link href="a9.css" rel="stylesheet" type="text/css">
+		<script>
+
+			var cyclingIndex = 0;
+			var randomIndex = 0;
+
+			function cyclingStylize()
+			{
+			  
+			  //TODO: implement cyclingStylize()
+			if (cyclingIndex > 20)
+				cyclingIndex = 0;
+            var mc1 = document.getElementById("MessageCell1");
+				mc1.className = "myStyle" + cyclingIndex;
+			
+			cyclingIndex ++;
+			  
+			  setTimeout("cyclingStylize()", 1500);
+
+			  return;
+			}
+
+			function randomStylize()
+			{
+			  
+			  //TODO: implement randomStylize()
+			randomIndex = Math.floor(Math.random(randomIndex) * 20);
+				
+            var mc2 = document.getElementById("MessageCell2");
+				mc2.className = "myStyle" + randomIndex;
+				
+			  setTimeout("randomStylize()", 1500);
+			  return;
+			}
+			
+			function stylize()
+			{
+				//TODO: implement stylize() for user-selection style
+            var mc3 = document.getElementById("MessageCell3");
+				mc3.style.color = getRadioValue(document.styleForm.color);
+				mc3.style.fontFamily = getRadioValue(document.styleForm.family);
+				mc3.style.fontSize = getRadioValue(document.styleForm.sizes);
+				mc3.style.backgroundColor = getRadioValue(document.styleForm.background);
+            return;								
+			}
+
+			//a helper function you may need
+			function getRadioValue(radioName)
+			{
+				for (var i = 0; i < radioName.length; i++) {
+					if (radioName[i].checked == true) {
+					return radioName[i].value;
+					}
+				}
+			}
+
+		</script>
+	</head>
+
+	<body onload="randomStylize();cyclingStylize();">
+		<table align="center" border="1" bordercolor="black">
+			<tbody><tr>
+				<td align="center">
+					<font size="3"><b>CYCLING VIEWER</b></font>
+				</td>
+			</tr>
+			<tr>
+				<td id="MessageCell1" align="center" height="50" width="400" class="myStyle1">
+					<div id="MessageText">
+						Hello World Wide Web!
+					<div>
+				</div></div></td>
+			</tr>
+		</tbody></table>
+		<hr>
+		<table align="center" border="1" bordercolor="black">
+			<tbody><tr>
+				<td align="center">
+					<font size="3"><b>RANDOM VIEWER</b></font>
+				</td>
+			</tr>
+			<tr>
+				<td id="MessageCell2" align="center" height="50" width="400" class="myStyle1">
+					<div id="MessageText">
+						Hello World Wide Web!
+					<div>
+				</div></div></td>
+			</tr>
+		</tbody></table>
+		<hr>
+		<form name="styleForm">
+			<table align="center" border="0">
+				<tbody><tr><td>
+					<table align="center" border="1" bordercolor="black">
+						<tbody><tr>
+							<td align="center">
+								<font size="3"><b>STYLE CLASS VIEWER</b></font>
+							</td>
+						</tr>
+						<tr>
+							<td id="MessageCell3" align="center" height="50" width="400" class="myStyle1">
+								<div id="MessageText">
+									Hello World Wide Web!
+								<div>
+							</div></div></td>
+						</tr>
+					</tbody></table>
+				</td></tr>
+				<tr><td>
+					<p>
+						</p><h4>Select Font Color:</h4>
+						<font face="Courier New">
+							<input name="color" value="red" type="radio">red
+							<input name="color" value="black" type="radio">black
+							<input name="color" value="blue" type="radio">blue
+							<input name="color" value="green" type="radio">green
+							<input name="color" value="white" type="radio">white
+						</font>
+					<p></p>
+				</td></tr>
+				<tr><td>
+					<p>
+						</p><h4>Select Font Family:</h4>
+						<font face="Courier New">
+							<input name="family" value="Arial" type="radio">Arial
+							<input name="family" value="Verdana" type="radio">Verdana
+							<input name="family" value="Courier" type="radio">Courier
+							<input name="family" value="Times" type="radio">Times
+							<input name="family" value="Helvetica" type="radio">Helvetica
+						</font>
+					<p></p>
+				</td></tr>
+				<tr><td>
+				  	<p>
+						</p><h4>Select Font Size:</h4>
+						<font face="Courier New">
+						    <input name="sizes" value="12" type="radio">12
+						    <input name="sizes" value="18" type="radio">18
+						    <input name="sizes" value="24" type="radio">24
+						    <input name="sizes" value="30" type="radio">30
+						</font>
+					<p></p>
+				</td></tr>
+				<tr><td>
+				  	<p>
+						</p><h4>Select Background Color:</h4>
+						<font face="Courier New">
+							<input name="background" value="red" type="radio">red
+							<input name="background" value="blue" type="radio">blue
+							<input name="background" value="green" type="radio">green
+							<input name="background" value="black" type="radio">black
+							<input name="background" value="white" type="radio">white
+						</font>
+					<p></p>
+				</td></tr>
+				<tr><td>
+					<input type="button" value="Change Style" onclick="stylize()">
+				</td></tr>
+			</tbody></table>
+		</form>
+
+</body></html>
